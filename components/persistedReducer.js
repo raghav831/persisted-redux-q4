@@ -1,8 +1,5 @@
-import React,{useState} from 'react';
-import { createStore } from 'redux';
-import createPersistedReducer from 'use-persisted-reducer';
-import storage from 'redux-persist/lib/storage'; 
-import { persistStore, persistReducer } from 'redux-persist';
+import React from 'react';
+import createPersistedReducer from './index';
 
 const usePersistedReducer = createPersistedReducer('state');
 
@@ -13,8 +10,7 @@ function reducer(state, action) {
     case 'toggle':
       return { isSessionActive: !state.isSessionActive };
     default:
-      return { isSessionActive: !state.isSessionActive };
-      // throw new Error();
+      throw new Error();
   }
 }
 
@@ -28,14 +24,5 @@ function Session() {
     </>
   );
 }
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-//   whitelist: ['auth'],
-// };
 
-// const persistedReducer = persistReducer(persistConfig, reducer);
-// const store = createStore(persistedReducer);
-
-// const persistor = persistStore(store);
-export {Session};
+export default Session;

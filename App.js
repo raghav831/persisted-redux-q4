@@ -1,10 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState, useEffect } from "react";
-import { store, persistor } from './components/persistedReducer';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
+// import { store, persistor, storage } from './components/persistedReducer';
+// import { PersistGate } from 'redux-persist/integration/react';
+// import { Provider } from 'react-redux';
 import { AppState, StyleSheet, Text, View, Button } from "react-native";
-import {Session} from './components/persistedReducer';
+import Session from './components/persistedReducer';
 
 export default function App() {
   
@@ -18,11 +18,13 @@ export default function App() {
         appState.current.match(/background/)
       )
       {
+        {console.log("app in background")}
         myVar = setTimeout(()=>{ setSession(false) }, 600000);
       }
       if(appState.current.match(/background/) &&
       nextAppState === "active") {
         console.log("App has come to the foreground!");
+        {console.log("user session",session)}
         clearTimeout(myVar);  
       }
       if(appState.current.match(/inactive/)){
@@ -37,17 +39,11 @@ export default function App() {
       subscription.remove();
     };
   }, []);
-
   return (
     <>
     <View style={styles.container}>
-      <Session/>
+    <Session/>  
     </View>
-    {/* <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      
-    </PersistGate>
-  </Provider> */}
   </>
   );
 }
